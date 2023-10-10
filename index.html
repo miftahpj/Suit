@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kertas Gunting Batu</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .game {
+            margin-top: 20px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .choice {
+            cursor: pointer;
+            width: 100px;
+            height: 100px;
+            transition: transform 0.2s;
+        }
+
+        .choice:hover {
+            transform: scale(1.1);
+        }
+
+        #result {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kertas Gunting Batu</h1>
+    <div class="game">
+        <div class="options">
+            <img src="gunting.png" alt="Gunting" class="choice" id="gunting">
+            <img src="kertas.png" alt="Kertas" class="choice" id="kertas">
+            <img src="batu.png" alt="Batu" class="choice" id="batu">
+        </div>
+        <div id="result"></div>
+    </div>
+    <script>
+        const choices = ["gunting", "kertas", "batu"];
+
+        const computerChoice = () => {
+            const randomIndex = Math.floor(Math.random() * 3);
+            return choices[randomIndex];
+        };
+
+        const getResult = (playerChoice, computerChoice) => {
+            if (playerChoice === computerChoice) return "Seri!";
+            if (
+                (playerChoice === "gunting" && computerChoice === "kertas") ||
+                (playerChoice === "kertas" && computerChoice === "batu") ||
+                (playerChoice === "batu" && computerChoice === "gunting")
+            ) {
+                return "Anda Menang!";
+            } else {
+                return "Anda Kalah!";
+            }
+        };
+
+        const choicesElements = document.querySelectorAll(".choice");
+        const resultElement = document.getElementById("result");
+
+        choicesElements.forEach((choiceElement) => {
+            choiceElement.addEventListener("click", () => {
+                const playerChoice = choiceElement.getAttribute("id");
+                const computer = computerChoice();
+                const result = getResult(playerChoice, computer);
+                resultElement.textContent = `Anda memilih ${playerChoice}, Komputer memilih ${computer}. ${result}`;
+            });
+        });
+    </script>
+</body>
+</html>
